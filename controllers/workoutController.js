@@ -14,4 +14,12 @@ router.get("/api/workouts", (req,res) => {
     })
 });
 
+router.get("/api/workouts/range", (req,res) => {
+    db.Workout.find({}).then(workouts => {
+        res.json(workouts);
+    }).catch (err => {
+        res.json(err);
+    })
+});
+
 module.exports = router;
