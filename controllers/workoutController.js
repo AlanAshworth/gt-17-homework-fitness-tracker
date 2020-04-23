@@ -45,4 +45,11 @@ router.put("/api/workouts/:id", (req, res) => {
     });
 });
 
+router.delete("/api/workouts/:id", function (req, res) {
+  db.Workout.remove({ _id: req.params.id }, (err, doc) => {
+    if (err) throw err;
+    res.json(doc);
+  });
+});
+
 module.exports = router;
