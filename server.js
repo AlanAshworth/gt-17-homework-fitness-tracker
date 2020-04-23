@@ -10,6 +10,10 @@ mongoose.connect(
     { useNewUrlParser: true }
   );
 
+  app.use(morgan('dev', {
+    skip: function (req, res) { return res.statusCode < 400 }
+  }))
+
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
