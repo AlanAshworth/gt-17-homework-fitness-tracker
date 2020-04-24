@@ -1,21 +1,19 @@
-const express = require("express");
-const router = express.Router();
-const db = require("../models");
+const router = require("express").Router();
+const Workout = require("../models/Workout.js");
 
 router.get("/api/workouts", (req, res) => {
-  db.Workout.find({})
+  Workout.find({})
     .then((getWorkouts) => {
-      console.log(getWorkouts);
       res.json(getWorkouts);
     })
     .catch((err) => {
-      console.log(err);
-      res.json(err);
+      res.status(400).json(err);
     });
 });
 
 router.get("/api/workouts/range", (req, res) => {
-  db.Workout.find({})
+  Workout.find({})
+  .limit(7)
     .then((getWorkoutsRange) => {
       res.json(getWorkoutsRange);
     })
@@ -24,19 +22,18 @@ router.get("/api/workouts/range", (req, res) => {
     });
 });
 
-router.post("/api/workouts", (req, res) => {
-  db.Workout.create(req.body)
+router.post("/api/workouts", ({ body }, res) => {
+  Workout.create(body)
     .then((postNewWorkout) => {
       res.json(postNewWorkout);
     })
     .catch((err) => {
-      res.status(500);
-      res.json(err);
+      res.status(400).json(err);
     });
 });
 
 router.put("/api/workouts/:id", (req, res) => {
-  db.Workout.findByIdAndUpdate({ _id: req.params.id })
+  Workout.findByIdAndUpdate({ _id: req.params.id })
     .then((updateWorkout) => {
       res.json(updateWorkout);
     })
@@ -46,7 +43,7 @@ router.put("/api/workouts/:id", (req, res) => {
 });
 
 router.delete("/api/workouts/:id", function (req, res) {
-  db.Workout.remove({ _id: req.params.id }, (err, doc) => {
+  Workout.remove({ _id: req.params.id }, (err, doc) => {
     if (err) throw err;
     res.json(doc);
   });
