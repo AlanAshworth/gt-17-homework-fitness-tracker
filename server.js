@@ -5,17 +5,11 @@ const morgan = require("morgan");
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", {
   useNewUrlParser: true,
 });
 
-app.use(
-  morgan("dev", {
-    skip: function (req, res) {
-      return res.statusCode < 400;
-    },
-  })
-);
+app.use(morgan("dev"));
 
 const workoutRoutes = require("./controllers/workoutController.js");
 const htmlRoutes = require("./controllers/htmlController.js");
