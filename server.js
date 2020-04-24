@@ -9,14 +9,15 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", {
   useNewUrlParser: true,
 });
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(express.static("public"));
 app.use(morgan("dev"));
 
 const workoutRoutes = require("./controllers/workoutController.js");
 const htmlRoutes = require("./controllers/htmlController.js");
 
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(workoutRoutes);
 app.use(htmlRoutes);
 
